@@ -90,42 +90,6 @@ book-reviews-app/
 
 ---
 
-## CI/CD
-
-### Configuración de GitHub Actions
-1. Crear un archivo de workflow en `.github/workflows/flutter-ci.yml`:
-   ```yaml
-   name: Flutter CI/CD
-
-   on:
-     push:
-       branches:
-         - main
-
-   jobs:
-     build:
-       runs-on: ubuntu-latest
-
-       steps:
-         - uses: actions/checkout@v3
-         - uses: subosito/flutter-action@v2
-           with:
-             flutter-version: 'stable'
-         - run: flutter pub get
-         - run: flutter test
-         - run: flutter build apk --release
-   ```
-
-2. Configurar Firebase Hosting en GitHub:
-   - Generar un token de despliegue de Firebase.
-   - Configurarlo como un secreto en GitHub (`FIREBASE_DEPLOY_TOKEN`).
-   - Agregar un paso adicional para desplegar:
-     ```yaml
-         - run: firebase deploy --token {{ secrets.FIREBASE_DEPLOY_TOKEN }}
-     ```
-
----
-
 ## Planificación de desarrollo
 
 ### Etapas
