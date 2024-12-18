@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:868844482890:android:813d52b8e7e455f56351b3",
         "android_client_info": {
-          "package_name": "com.book_reviews_app.app"
+          "package_name": "com.example.book_reviews_app"
         }
       },
       "oauth_client": [],

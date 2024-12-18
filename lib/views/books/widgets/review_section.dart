@@ -18,6 +18,7 @@ class _ReviewSectionState extends State<ReviewSection> {
   @override
   Widget build(BuildContext context) {
     final reviewProvider = Provider.of<ReviewsViewModel>(context, listen: true);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -106,11 +106,10 @@ class _AddReviewState extends State<AddReview> {
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue.shade800, // Azul oscuro
-                        foregroundColor: Colors.white, // Letras blancas
+                        backgroundColor: Colors.blue.shade800,
+                        foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              8), // Bordes menos redondeados
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                       onPressed: rating > 0
