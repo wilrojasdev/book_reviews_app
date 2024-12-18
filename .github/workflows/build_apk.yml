@@ -3,36 +3,36 @@ name: Build and Release APK
 on:
   push:
     branches:
-      - main  # o cualquier otra rama que prefieras para las publicaciones
+      - main  # O la rama que prefieras
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    # Paso 1: Configurar Flutter
+    # Paso 1: Clonar el repositorio
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    # Paso 2: Configurar Flutter
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: 'stable'  # o la versión específica que estés usando
+        flutter-version: 'stable'  # O usa una versión específica si prefieres
 
-    # Paso 2: Instalar dependencias
+    # Paso 3: Instalar dependencias
     - name: Install dependencies
       run: flutter pub get
 
-    # Paso 3: Construir el APK
+    # Paso 4: Construir el APK
     - name: Build APK
       run: flutter build apk --release
 
-    # Paso 4: Subir el APK a GitHub Releases (opcional)
+    # Paso 5: Subir APK a GitHub Releases
     - name: Upload APK to GitHub Releases
-      if: github.ref == 'refs/heads/main' # O la rama que decidas para releases
-      uses: gh-actions/upload-release-asset@v1
+      if: github.ref == 'refs/heads/main'  # O la rama que prefieras
+      uses: softprops/action-gh-release@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: build/app/outputs/flutter-apk/app-release.apk
-        asset_name: app-release.apk
-        asset_content_type: application/vnd.android.package-archive
+        files: build/app/outputs/flutter-apk/app-release.apk
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Este token se utiliza para autenticar y permitir la carga
