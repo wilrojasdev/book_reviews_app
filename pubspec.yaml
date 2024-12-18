@@ -46,6 +46,9 @@ dependencies:
   intl: ^0.20.1
   firebase_auth: ^5.3.4
   shared_preferences: ^2.3.3
+  cached_network_image: ^3.4.1
+  flutter_launcher_icons: ^0.14.2
+  url_strategy: ^0.3.0
 
 dev_dependencies:
   flutter_test:

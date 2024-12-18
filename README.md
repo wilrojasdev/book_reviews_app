@@ -36,7 +36,7 @@
 ## Tecnologías
 
 - **Frontend:** Flutter (Dart)
-- **Backend:** Firebase (Firestore para los datos, Authentication para la autenticación, Hosting para el despliegue web)
+- **Backend:** Firebase (Firestore para los datos, Authentication para la autenticación, Hosting para el despliegue web), API de Google Books
 - **Arquitectura:** MVVM (Model-View-ViewModel)
 - **CI/CD:** GitHub Actions
 - **Plataforma de alojamiento:** Firebase Hosting
@@ -79,14 +79,12 @@
 book-reviews-app/
 ├── lib/
 │   ├── main.dart       # Punto de entrada de la aplicación
-│   ├── screens/        # Pantallas principales (Inicio, Detalles, Autenticación)
+│   ├── views/          # Pantallas principales (Inicio, Detalles, Autenticación)
 │   ├── viewmodels/     # Lógica de negocio para cada pantalla (MVVM)
 │   ├── models/         # Modelos de datos
 │   ├── widgets/        # Componentes reutilizables
 │   ├── services/       # Interacción con Firebase
 │   └── utils/          # Utilidades generales
-├── assets/             # Recursos estáticos (imágenes, fuentes)
-├── test/               # Pruebas unitarias y de integración
 └── .github/workflows/   # Configuración de GitHub Actions
 ```
 
@@ -131,28 +129,28 @@ book-reviews-app/
 ## Planificación de desarrollo
 
 ### Etapas
-1. **Diseño del UI/UX** (2 días)
+1. **Diseño del UI/UX** (5 horas)
    - Diseñar pantallas con Figma.
    - Crear un prototipo funcional.
 
-2. **Configuración inicial** (1 día)
+2. **Configuración inicial** (2 horas)
    - Configurar Firebase y el entorno de desarrollo Flutter.
 
-3. **Desarrollo de funcionalidades principales** (1 semana)
+3. **Desarrollo de funcionalidades principales** (8 horas)
    - Página de inicio y búsqueda.
    - Detalles de libros.
    - Sistema de reseñas.
 
-4. **Autenticación y autorización** (2 días)
+4. **Autenticación y autorización** (5 horas)
    - Registro, inicio y cierre de sesión.
 
-5. **Pruebas e integración** (2 días)
+5. **Pruebas e integración** (2 horas)
    - Pruebas unitarias e integración con Firebase.
    - Configuración y prueba del pipeline de CI/CD.
 
-6. **Despliegue final** (1 día)
+6. **Despliegue final** (1 hora)
 
-### Total estimado: 10 días
+### Total estimado: 23 horas
 
 ---
 

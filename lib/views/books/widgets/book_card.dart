@@ -1,6 +1,7 @@
 import 'package:book_reviews_app/models/book.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class BookCard extends StatelessWidget {
   const BookCard({
@@ -17,14 +18,11 @@ class BookCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            book.coverImageUrl != null
-                ? Image.network(
-                    book.coverImageUrl!,
-                    width: 150,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  )
-                : const Icon(Icons.book, size: 150),
+            CachedNetworkImage(
+              imageUrl: book.coverImageUrl!,
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
             const SizedBox(height: 8),
             SizedBox(
               width: 160,

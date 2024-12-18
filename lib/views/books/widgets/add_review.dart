@@ -43,6 +43,8 @@ class _AddReviewState extends State<AddReview> {
       builder: (context, reviewViewModel, child) {
         if (!isLoggedIn) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
                 'To submit a review, you need to be logged in. Do you have an account? Log in now.',
@@ -66,7 +68,8 @@ class _AddReviewState extends State<AddReview> {
           );
         }
         return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
               'Add a Review',

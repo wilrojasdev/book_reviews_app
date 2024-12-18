@@ -4,6 +4,8 @@ import 'package:book_reviews_app/viewmodels/review_viewmodel.dart';
 import 'package:book_reviews_app/views/books/widgets/add_review.dart';
 import 'package:book_reviews_app/views/books/widgets/book_detail.dart';
 import 'package:book_reviews_app/views/books/widgets/review_section.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,6 +34,7 @@ class _BookDetailViewState extends State<BookDetailView> {
     final bookProvider = Provider.of<BooksViewModel>(context, listen: true);
     final reviewProvider = Provider.of<ReviewsViewModel>(context, listen: true);
     final Book book = bookProvider.getBookById(widget.bookId);
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -103,13 +106,10 @@ class BookImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return book.coverImageUrl != null
-        ? Image.network(
-            book.coverImageUrl!,
-            width: double.infinity,
-            height: 250,
-            fit: BoxFit.cover,
-          )
-        : const Icon(Icons.book, size: 250);
+    return CachedNetworkImage(
+      imageUrl: book.coverImageUrl!,
+      placeholder: (context, url) => const CircularProgressIndicator(),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
+    );
   }
 }
