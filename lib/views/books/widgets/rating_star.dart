@@ -10,6 +10,7 @@ class RatingStar extends StatelessWidget {
   Widget build(BuildContext context) {
     return RatingStars(
       value: rating.toDouble(),
+      onValueChanged: onChanged,
       starBuilder: (index, color) => Icon(
         Icons.star,
         color: color,

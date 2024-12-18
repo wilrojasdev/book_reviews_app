@@ -3,41 +3,47 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Review {
   final String id;
   final String userId;
+  final String userName; // Campo para el nombre del usuario
   final String bookId;
-  final double rating;
   final String comment;
+  final double rating;
   final DateTime createdAt;
 
   Review({
     required this.id,
     required this.userId,
+    required this.userName, // Asegúrate de incluirlo en el constructor
     required this.bookId,
-    required this.rating,
     required this.comment,
+    required this.rating,
     required this.createdAt,
   });
 
-  // Conversión de datos desde Firestore
-  factory Review.fromMap(String id, Map<String, dynamic> map) {
+  // Método de fábrica para convertir los datos del Firestore a un objeto Review
+  factory Review.fromMap(String id, Map<String, dynamic> data) {
     return Review(
       id: id,
-      userId: map['idUser'],
-      bookId: map['idBook'],
-      rating: map['rating'] + 0.0,
-      comment: map['comment'],
-      createdAt: (map['createAt'] as Timestamp).toDate(),
+      userId: data['userId'],
+      userName: data['userName'], // Obtener el nombre del usuario
+      bookId: data['idBook'],
+      comment: data['comment'],
+      rating: data['rating'],
+      createdAt: data['createdAt'] != null
+          ? (data['createdAt'] as Timestamp)
+              .toDate() // Si 'createdAt' no es nulo, convertirlo
+          : DateTime.now(),
     );
   }
 
-  // Conversión de datos a Firestore
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'idUser': userId,
+      'userId': userId,
+      'userName': userName, // Guardar el nombre del usuario
       'idBook': bookId,
-      'rating': rating,
       'comment': comment,
-      'createAt': createdAt,
+      'rating': rating,
+      'createdAt': Timestamp.fromDate(
+          createdAt), // Convertir DateTime a Timestamp para guardarlo
     };
   }
 }

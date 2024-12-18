@@ -1,9 +1,8 @@
 class User {
-  final String id; // UID proporcionado por Firebase Authentication
-  final String name; // Nombre del usuario
-  final String email; // Correo electrónico del usuario
-  final String?
-      profilePicture; // URL de la imagen de perfil del usuario (opcional)
+  final String id;
+  final String name;
+  final String email;
+  final String? profilePicture;
 
   User({
     required this.id,
@@ -12,7 +11,6 @@ class User {
     this.profilePicture,
   });
 
-  // Conversión de datos desde Firestore
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['id'],
@@ -22,7 +20,6 @@ class User {
     );
   }
 
-  // Conversión de datos a Firestore
   Map<String, dynamic> toMap() {
     return {
       'id': id,

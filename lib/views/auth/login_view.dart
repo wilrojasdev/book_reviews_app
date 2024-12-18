@@ -1,4 +1,5 @@
 import 'package:book_reviews_app/viewmodels/auth_viewmodel.dart';
+import 'package:book_reviews_app/viewmodels/profile_viewmodel.dart';
 import 'package:book_reviews_app/views/auth/texfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +13,8 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profileViewModel =
+        Provider.of<ProfileViewModel>(context, listen: true);
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Padding(
@@ -32,14 +35,12 @@ class LoginView extends StatelessWidget {
                 style: TextStyle(fontSize: 18, color: Colors.grey),
               ),
               const SizedBox(height: 40),
-              // Campo de correo
               CustomTextField(
                 controller: _emailController,
                 icon: Icons.email,
                 label: 'Email',
               ),
               const SizedBox(height: 16),
-              // Campo de contraseña
               CustomTextField(
                 controller: _passwordController,
                 icon: Icons.lock,
@@ -47,14 +48,18 @@ class LoginView extends StatelessWidget {
                 obscureText: true,
               ),
               const SizedBox(height: 32),
-              // Botón de inicio de sesión
               Consumer<AuthViewModel>(
                 builder: (context, authViewModel, child) {
                   return authViewModel.isLoading
                       ? const Center(child: CircularProgressIndicator())
                       : ElevatedButton(
-                          onPressed: () => authViewModel.userLogin(context,
-                              _emailController.text, _passwordController.text),
+                          onPressed: () async {
+                            await authViewModel.userLogin(
+                                context,
+                                _emailController.text,
+                                _passwordController.text,
+                                profileViewModel);
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xff55b047),
                             minimumSize: const Size(double.infinity, 50),
@@ -73,7 +78,6 @@ class LoginView extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 16),
-              // Botón de ir a la pantalla de registro
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

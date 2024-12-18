@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 final GoRouter router = GoRouter(initialLocation: '/navigation_view', routes: [
   GoRoute(
     path: '/navigation_view',
-    builder: (context, state) => NavigationView(),
+    builder: (context, state) => const NavigationView(),
   ),
   GoRoute(
     path: '/books_category',

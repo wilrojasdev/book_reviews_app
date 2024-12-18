@@ -8,13 +8,11 @@ import 'package:flutter/material.dart';
 class ReviewCard extends StatelessWidget {
   const ReviewCard({
     super.key,
-    required this.userName,
     required this.review,
     required this.currentUserId,
     required this.reviewProvider,
   });
 
-  final String userName;
   final Review review;
   final String currentUserId;
   final ReviewsViewModel reviewProvider;
@@ -33,7 +31,7 @@ class ReviewCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  userName,
+                  review.userName,
                   style: const TextStyle(
                       color: Colors.black54,
                       fontSize: 18,

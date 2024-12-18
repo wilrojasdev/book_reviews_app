@@ -32,21 +32,18 @@ class RegisterView extends StatelessWidget {
                 style: TextStyle(fontSize: 18, color: Colors.grey),
               ),
               const SizedBox(height: 40),
-              // Campo de nombre
               CustomTextField(
                 controller: _nameController,
                 icon: Icons.person,
                 label: 'Name',
               ),
               const SizedBox(height: 16),
-              // Campo de correo
               CustomTextField(
                 controller: _emailController,
                 icon: Icons.email,
                 label: 'Email',
               ),
               const SizedBox(height: 16),
-              // Campo de contraseña
               CustomTextField(
                 controller: _passwordController,
                 icon: Icons.lock,
@@ -54,7 +51,6 @@ class RegisterView extends StatelessWidget {
                 obscureText: true,
               ),
               const SizedBox(height: 32),
-              // Botón de registro
               Consumer<AuthViewModel>(
                 builder: (context, authViewModel, child) {
                   return authViewModel.isLoading

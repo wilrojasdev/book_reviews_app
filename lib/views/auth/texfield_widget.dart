@@ -7,29 +7,26 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.icon,
     required this.label,
     this.obscureText = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
       obscureText: obscureText,
-      style: TextStyle(
-          color: const Color.fromARGB(255, 31, 30, 30)), // Color del texto
+      style: const TextStyle(color: Color.fromARGB(255, 31, 30, 30)),
       decoration: InputDecoration(
-        prefixIcon: Icon(icon,
-            color: const Color.fromARGB(
-                255, 31, 30, 30)), // Icono dentro del campo
+        prefixIcon: Icon(icon, color: const Color.fromARGB(255, 31, 30, 30)),
         labelText: label,
-        labelStyle: TextStyle(color: Colors.grey), // Color de la etiqueta
+        labelStyle: const TextStyle(color: Colors.grey),
         filled: true,
-        fillColor: const Color(0xFFF0F0F0), // Gris claro para el fondo
-        border: InputBorder.none, // Sin bordes
+        fillColor: const Color(0xFFF0F0F0),
+        border: InputBorder.none,
         enabledBorder: InputBorder.none,
         focusedBorder: InputBorder.none,
         errorBorder: InputBorder.none,

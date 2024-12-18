@@ -7,11 +7,7 @@ class ProfileViewModel extends ChangeNotifier {
   String? userEmail;
   bool isLoading = true;
 
-  ProfileViewModel() {
-    _loadUserData();
-  }
-
-  Future<void> _loadUserData() async {
+  Future<void> loadUserData() async {
     final prefsService = SharedPreferenceService();
     final id = await prefsService.getUserId();
 

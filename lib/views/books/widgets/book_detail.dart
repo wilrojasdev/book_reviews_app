@@ -10,10 +10,6 @@ class BookDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          book.title,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
         const SizedBox(height: 8),
         Text(
           book.authors.isNotEmpty

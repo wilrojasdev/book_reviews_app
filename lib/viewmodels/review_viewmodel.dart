@@ -1,100 +1,104 @@
 import 'package:book_reviews_app/models/review.dart';
 import 'package:book_reviews_app/services/firebase_services.dart';
-import 'package:flutter/material.dart';
+import 'package:book_reviews_app/services/shared_preference_services.dart';
+import 'package:flutter/foundation.dart';
 
 class ReviewsViewModel extends ChangeNotifier {
   final FirebaseService _firebaseService = FirebaseService();
-
-  bool _isLoading = false;
+  bool _isLoading = true;
+  bool hasReview = false;
+  List<Review> bookReviews = [];
 
   bool get isLoading => _isLoading;
-  List<Review> bookReviews = [];
 
   Future<void> fetchBookReviews(String bookId) async {
     try {
+      _isLoading = true;
       List<Review> reviews = await _firebaseService.getReviewsByBookId(bookId);
-      _isLoading = false;
       bookReviews = reviews;
 
+      _checkUserLoginStatus();
+      _isLoading = false;
       notifyListeners();
     } catch (e) {
-      print('Error fetching reviews: $e');
+      if (kDebugMode) {
+        print('Error fetching reviews: $e');
+      }
     }
   }
 
-  // Buscar reseña por userId
+  String currentUser = '';
+
+  void _checkUserLoginStatus() async {
+    currentUser = (await SharedPreferenceService().getUserId()) ?? "";
+    if (currentUser.isNotEmpty) {
+      checkIfUserHasReviewed(currentUser);
+    }
+  }
+
   Review? getReviewByUserId(String userId) {
     return bookReviews.firstWhere(
       (review) => review.userId == userId,
     );
   }
 
-  // Método para agregar una nueva reseña
   Future<void> addReview(
       String userId, String bookId, String comment, double rating) async {
     if (rating > 0) {
-      // Establecer el indicador de carga a true
       _isLoading = true;
       notifyListeners();
 
       try {
-        // Crear una nueva reseña con la fecha actual
         Review newReview = Review(
-          id: '', // El ID será generado por Firestore
+          id: '',
           userId: userId,
+          userName: '',
           bookId: bookId,
           comment: comment,
           rating: rating,
           createdAt: DateTime.now(),
         );
 
-        // Llamar al servicio Firebase para agregar la reseña
         await _firebaseService.addReview(newReview);
 
-        // Obtener las reseñas actualizadas desde Firestore
         List<Review> updatedReviews =
             await _firebaseService.getReviewsByBookId(bookId);
-
-        // Actualizar la lista de reseñas
         bookReviews = updatedReviews;
         hasReview = true;
-        // Establecer el indicador de carga a false
+
         _isLoading = false;
         notifyListeners();
       } catch (e) {
-        // En caso de error, restablecer el indicador de carga
         _isLoading = false;
         notifyListeners();
-        print('Error adding review: $e');
+        if (kDebugMode) {
+          print('Error adding review: $e');
+        }
         throw Exception('Failed to add review');
       }
     }
   }
 
-  bool hasReview = false;
-  // Método para verificar si el usuario ya ha dejado una reseña
   void checkIfUserHasReviewed(String userId) {
     if (bookReviews.isEmpty) {
       hasReview = false;
     } else {
-      final review = bookReviews.any((review) => review.userId == userId);
-      hasReview = review;
+      hasReview = bookReviews.any((review) => review.userId == userId);
     }
   }
 
   Future<void> deleteReview(String reviewId, String bookId) async {
     try {
-      // Llamar al método para eliminar la reseña y obtener la respuesta
       String result = await _firebaseService.deleteReview(reviewId);
 
-      // Manejar la respuesta del resultado
       if (result == 'Review deleted successfully') {
         hasReview = false;
         await fetchBookReviews(bookId);
       }
     } catch (e) {
-      // Manejar cualquier error que ocurra
-      print('Error occurred: $e');
+      if (kDebugMode) {
+        print('Error occurred: $e');
+      }
     }
   }
 }

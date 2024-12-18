@@ -1,3 +1,6 @@
+import 'package:book_reviews_app/viewmodels/profile_viewmodel.dart';
+import 'package:flutter/material.dart';
+
 class ProfileDetail extends StatelessWidget {
   final ProfileViewModel viewModel;
   const ProfileDetail({
@@ -8,7 +11,6 @@ class ProfileDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -35,6 +37,15 @@ class ProfileDetail extends StatelessWidget {
               ),
               const Spacer(),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(
+                      255, 181, 28, 43), // Rojo suave para el fondo
+                  foregroundColor: Colors.white, // Letras blancas
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(8), // Bordes menos redondeados
+                  ),
+                ),
                 onPressed: () async {
                   final shouldLogout = await showDialog<bool>(
                     context: context,
@@ -64,7 +75,7 @@ class ProfileDetail extends StatelessWidget {
                   if (shouldLogout == true) {
                     await viewModel.logout();
                     if (!context.mounted) return;
-                    context.go('/login');
+                    //  context.go('/login');
                   }
                 },
                 child: const Text('Logout'),

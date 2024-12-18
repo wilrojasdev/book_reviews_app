@@ -102,18 +102,29 @@ class _AddReviewState extends State<AddReview> {
             const SizedBox(height: 16),
             reviewViewModel.isLoading
                 ? const Center(child: CircularProgressIndicator())
-                : ElevatedButton(
-                    onPressed: rating > 0
-                        ? () async {
-                            await reviewViewModel.addReview(
-                              userId!,
-                              widget.bookId,
-                              comment,
-                              rating,
-                            );
-                          }
-                        : null,
-                    child: const Text('Submit Review'),
+                : Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue.shade800, // Azul oscuro
+                        foregroundColor: Colors.white, // Letras blancas
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              8), // Bordes menos redondeados
+                        ),
+                      ),
+                      onPressed: rating > 0
+                          ? () async {
+                              await reviewViewModel.addReview(
+                                userId!,
+                                widget.bookId,
+                                comment,
+                                rating,
+                              );
+                            }
+                          : null,
+                      child: const Text('Submit Review'),
+                    ),
                   ),
           ],
         );
