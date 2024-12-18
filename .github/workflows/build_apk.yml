@@ -3,7 +3,7 @@ name: Build and Release APK
 on:
   push:
     branches:
-      - main  # O la rama principal de tu repositorio
+      - main
 
 jobs:
   build:
@@ -14,27 +14,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Paso 2: Configurar Java
+      # Paso 2: Configurar Git
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Paso 3: Configurar Java
       - name: Set up Java
         uses: actions/setup-java@v1
         with:
           java-version: "17.x"
 
-      # Paso 3: Instalar Flutter
+      # Paso 4: Instalar Flutter
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.24.1"
 
-      # Paso 4: Instalar dependencias
+      # Paso 5: Instalar dependencias
       - name: Install dependencies
         run: flutter pub get
 
-      # Paso 5: Construir el APK
+      # Paso 6: Construir el APK
       - name: Build APK
         run: flutter build apk --release
 
-      # Paso 6: Crear un tag para la release
+      # Paso 7: Crear un tag para la release
       - name: Create a tag
         id: create_tag
         run: |
@@ -43,7 +49,7 @@ jobs:
           git tag $TAG
           git push origin $TAG
 
-      # Paso 7: Subir el APK a GitHub Releases
+      # Paso 8: Subir el APK a GitHub Releases
       - name: Upload APK to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:

@@ -1,7 +1,7 @@
 # Book Reviews App
 
 ## Descripción
-**Book Reviews App** es una aplicación móvil desarrollada en **Flutter** con un backend basado en **Firebase**. Permite a los usuarios explorar una lista de libros, buscar por título, autor o categoría, y dejar reseñas para los libros. Además, incluye autenticación de usuarios y un pipeline de **CI/CD** configurado con **GitHub Actions** para garantizar un desarrollo continuo. El proyecto sigue la arquitectura **MVVM** (Model-View-ViewModel) para una mejor separación de responsabilidades y mantenibilidad del código.
+**Book Reviews App** es una aplicación móvil desarrollada en **Flutter** con un backend basado en **Firebase**. Permite a los usuarios explorar una lista de libros, buscar por título, autor o categoría, y dejar reseñas para los libros. Además, incluye un pipeline de **CI/CD** configurado con **GitHub Actions** para garantizar un desarrollo continuo. El proyecto sigue la arquitectura **MVVM** (Model-View-ViewModel) para una mejor separación de responsabilidades y mantenibilidad del código.
 
 ---
 
@@ -73,6 +73,22 @@
 
 ---
 
+## APK descargable
+
+Descarga la última versión del APK directamente desde los **Releases** de GitHub.  
+[Descargar APK](https://github.com/usuario/book-reviews-app/releases/latest)
+
+---
+
+## Página web
+
+Visita la versión web de la aplicación alojada en Firebase Hosting:  
+[Ir a la página web](https://tu-dominio-firebase.web.app)
+
+> **Nota:** Por restricciones del API de Google Books, las imágenes no se cargan correctamente debido a errores relacionados con la política de CORS (Cross-Origin Resource Sharing).
+
+---
+
 ## Estructura del proyecto
 
 ```
@@ -120,4 +136,3 @@ book-reviews-app/
 
 ## Licencia
 Este proyecto está bajo la licencia [MIT](LICENSE).
-
