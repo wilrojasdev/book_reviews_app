@@ -1,58 +1,105 @@
-name: Build and Release APK
+name: 🚀 Build and release APK
 
 on:
   push:
     branches:
       - main
+    paths:
+      - lib/**
+      - pubspec.yaml
+      - android/**
+      - action.yml
 
 jobs:
-  build:
+  build_and_push:
     runs-on: ubuntu-latest
-
+    outputs:
+      branch: ${{ steps.version.outputs.major }}
+      tag: ${{ steps.version.outputs.tag }}
     steps:
-      # Paso 1: Clonar el repositorio
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      # Paso 2: Configurar Git
-      - name: Configure Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      # Paso 3: Configurar Java
-      - name: Set up Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: "17.x"
-
-      # Paso 4: Instalar Flutter
-      - name: Install Flutter
+      - name: ⚙️ Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.24.1"
 
-      # Paso 5: Instalar dependencias
-      - name: Install dependencies
+      - name: 🔃 Checkout
+        uses: actions/checkout@v2
+
+      - name: 🛠️ Install dependencies
         run: flutter pub get
 
-      # Paso 6: Construir el APK
-      - name: Build APK
+      - name: 📦 Build APK
         run: flutter build apk --release
 
-      # Paso 7: Crear un tag para la release
-      - name: Create a tag
-        id: create_tag
+      - name: ⚙️ Configure Git
         run: |
-          TAG="v$(date +'%Y%m%d%H%M%S')"
-          echo "TAG=$TAG" >> $GITHUB_ENV
-          git tag $TAG
-          git push origin $TAG
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      # Paso 8: Subir el APK a GitHub Releases
-      - name: Upload APK to GitHub Releases
-        uses: softprops/action-gh-release@v1
-        with:
-          files: build/app/outputs/flutter-apk/app-release.apk
+      - name: ⚙️ Parse version
+        id: version
+        run: |
+          VERSION=$(date +'%Y%m%d%H%M%S')
+          echo "major=apk-v${VERSION}" >> $GITHUB_ENV
+          echo "tag=v${VERSION}" >> $GITHUB_ENV
+          echo "::set-output name=major::apk-v${VERSION}"
+          echo "::set-output name=tag::v${VERSION}"
+
+      - name: 📢 Publish APK to branch
+        uses: s0/git-publish-subdir-action@v2.4.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: ${{ steps.version.outputs.major }}
+          folder: build/app/outputs/flutter-apk
+          skip_empty_commits: true
+
+  tag_version:
+    needs: build_and_push
+    runs-on: ubuntu-latest
+    outputs:
+      tagged: ${{ steps.check_tagged.outputs.tagged }}
+      tag: ${{ steps.tag.outputs.new_tag }}
+    steps:
+      - name: 🔃 Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ needs.build_and_push.outputs.branch }}
+          fetch-depth: 0
+
+      - name: ⚙️ Check tag exists
+        id: check_tag
+        uses: mukunku/tag-exists-action@v1.0.0
+        with:
+          tag: ${{ needs.build_and_push.outputs.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔖 Create tag
+        id: tag
+        if: ${{ steps.check_tag.outputs.exists == 'false' }}
+        uses: anothrNick/github-tag-action@1.34.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CUSTOM_TAG: ${{ needs.build_and_push.outputs.tag }}
+
+      - name: ⚙️ Verify tag creation
+        id: check_tagged
+        run: |
+          echo "::set-output name=tagged::${{ (steps.check_tag.outputs.exists == 'false') && (steps.tag.outputs.new_tag == steps.tag.outputs.tag) }}"
+
+  create_release:
+    needs: tag_version
+    if: ${{ needs.tag_version.outputs.tagged == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔃 Checkout
+        uses: actions/checkout@v2
+
+      - name: 🛎️ Create release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ needs.tag_version.outputs.tag }}
+          files: build/app/outputs/flutter-apk/app-release.apk
+          draft: false
