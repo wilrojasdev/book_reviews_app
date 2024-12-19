@@ -48,13 +48,12 @@ jobs:
       - name: 📢 Publish APK to branch
         uses: s0/git-publish-subdir-action@v2.4.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          branch: ${{ steps.version.outputs.major }}
-          folder: build/app/outputs/flutter-apk
-          skip_empty_commits: true
-          REPO: self
-
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            REPO: self
+            BRANCH: v${{ steps.version.outputs.major }}
+            FOLDER: build/app/outputs/flutter-apk
+            SKIP_EMPTY_COMMITS: true
+          
   tag_version:
     needs: build_and_push
     runs-on: ubuntu-latest
