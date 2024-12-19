@@ -53,6 +53,7 @@ jobs:
           branch: ${{ steps.version.outputs.major }}
           folder: build/app/outputs/flutter-apk
           skip_empty_commits: true
+          REPO: self
 
   tag_version:
     needs: build_and_push
