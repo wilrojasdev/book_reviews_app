@@ -76,7 +76,7 @@
 ## APK descargable
 
 Descarga la última versión del APK directamente desde los **Releases** de GitHub.  
-[Descargar APK](app-release.apk)
+[Descargar APK](https://github.com/wilrojasdev/book_reviews_app/blob/vapk-v20241219170840/app-release.apk)
 
 ---
 
