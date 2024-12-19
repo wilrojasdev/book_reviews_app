@@ -83,7 +83,7 @@ Descarga la última versión del APK directamente desde los **Releases** de GitH
 ## Página web
 
 Visita la versión web de la aplicación alojada en Firebase Hosting:  
-[Ir a la página web]([https://tu-dominio-firebase.web.app](https://book-reviews-app-f205e.web.app/navigation_view))
+[Ir a la página web]([https://tu-dominio-firebase.web.app](https://book-reviews-app-f205e.web.app/navigation_view)
 
 > **Nota:** Por restricciones del API de Google Books, las imágenes no se cargan correctamente debido a errores relacionados con la política de CORS (Cross-Origin Resource Sharing).
 
