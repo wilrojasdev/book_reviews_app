@@ -76,7 +76,7 @@
 ## APK descargable
 
 Descarga la última versión del APK directamente desde los **Releases** de GitHub.  
-[Descargar APK](https://github.com/usuario/book-reviews-app/releases/latest)
+[Descargar APK](app-release.apk)
 
 ---
 
