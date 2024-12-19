@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp.router(
-        title: 'Read Review',
+        title: 'Read Review App',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
           useMaterial3: true,
